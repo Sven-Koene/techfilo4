@@ -4,7 +4,7 @@ body{
 
 .slider{
     min-width: 100vw;
-    height: 50%;
+    height: 500px;
 }
 
 
@@ -38,5 +38,5 @@ li a:hover:not(.active) {
 .navbar{
 
    width: 100vw;
-   position:fixed;
+   /*position:fixed;*/
 }
