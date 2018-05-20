@@ -1,47 +1,78 @@
 <?php
-session_start(); 
+session_start();
+require_once 'includes/database.php';
+if (isset($_POST['submit'])) {
+$email = mysqli_real_escape_string($db, $_POST['email']);
+$password = mysqli_real_escape_string($db, $_POST['password']);
 
-if(isset($_SESSION) && $_SESSION['lastActive']>time()+60*15){ // er is een sessie EN je bent in laatste 15 min actief geweest 
-    $_SESSION['lastActive']=time(); // Je klikte, dus laatst actief updaten 
-    header("Location: index.php"); // Doorverwijzen naar je ingelogde pagina 
-    exit; //en netjes je header sluiten 
+$errors = [];
+if ($email == '') {
+    $errors['email'] = 'Email mag niet leeg zijn';
+}
+if ($password == '') {
+    $errors['password'] = 'Password mag niet leeg zijn';
+}
+
+$query = "SELECT * FROM users WHERE email = '$email'"; // AND password = '$password'
+$result = mysqli_query($db, $query);
+
+$user = mysqli_fetch_assoc($result);
+
+if ($user) {
+    $hash = $user['password'];
+    // $isAdmin = $row['isAdmin'];
+
+    if (password_verify($_POST['password'], $hash)) {
+        $_SESSION['email'] = $_POST['email'];
+        // doorsturen naar welkomspagina
+        header('location: secure.php');
+        exit;
     }
+    } else {
+        echo 'Login failed';
+    }
+}
+   if ($user) {
+       $_SESSION['email'] = $email['email'];
+       // doorsturen naar welkomspagina
+       header('location: geheim.php');
+       exit;
+   }
+//    else {
+//        $errors ['general'] = 'combinatie email en password klopt niet';
+//    }
+// }     
 
-    if(isset($_POST['submit'])){ // er is op de loginknop gedrukt 
-        if(empty($_POST['email'])){echo"Je hebt geen e-mail ingevuld!";} 
-    elseif (empty($_POST['password'])){echo"Je hebt geen wachtwoord ingevuld!";} 
-    else{ //dus netjes ingevuld 
-      $sLid = mysql_query("SELECT id,email FROM users  
-                           WHERE email='".$_POST['email']."' AND password='".md5($_POST['password'])."' 
-                           LIMIT 1") or die(mysql_error()); 
-    if(mysql_num_rows($sLid)==0){echo"Deze inlog gevens zijn incorrect!";}/// Niet vertellen wat er fout is, alleen dat het fout is, ivm 'hackers' 
-    else{ 
-      $fLid = mysql_fetch_assoc($sLid); //haal de gegevens op van het lid  
-      $_SESSION['user_id'] = $fLid['id']; // De id die we hebben gevonden doorgeven aan een sessie waarde, want die onthoud het 
-      $_SESSION['user_naam'] = $fLid['naam']; // Ook een naam mee geven, niet verplicht,wel handig 
-      $_SESSION['lastActive'] = time(); // je bent actief, dus tijd opslaan 
-      header("Location: main.php"); // je bent ingelogd nu, dus door verwijzen naar de ingelogd pagina 
-      exit; // en weer netjes je header sluiten  
-      }//--einde wel bestaan  
-    }//--einde netjes ingevuld  
-  }//--einde van de if inlogsubmit
-  
 ?>
 
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=	, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>login</title>
 </head>
 <body>
-<form method="post">
-    E-mail<input type="text" name="email" placeholder="email"><br>
-    Wachtwoord<input type="password" name="password"><br>
-    <button type="submit" name="submit">Login</button>
+<div><span><?= isset($errors['general']) ? $errors['general'] : '' ?></span></div>
+<form action="" method="post">
+    <div>
+        <label for="email">Email</label>
+        <input id="email" type="text" name="email" value="">
+        <span><?= isset($errors['email']) ? $errors['email'] : '' ?></span>
+    </div>
+    <div>
+        <label for="password">password</label>
+        <input id="password" type="password" name="password" value="">
+        <span><?= isset($errors['password']) ? $errors['password'] : '' ?></span>
+    </div>
+    <div>
+        <input type="submit" name="submit" value="login">
+    </div>
 </form>
 </body>
 </html>
+
+
