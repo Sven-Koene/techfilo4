@@ -1,4 +1,5 @@
 <?php
+session_start();
 //Check if Post isset, else do nothing
 if (isset($_POST['submit'])) {
     //Require database in this file & image helpers
@@ -7,8 +8,8 @@ if (isset($_POST['submit'])) {
     //Postback with the data showed to the user, first retrieve data from 'Super global'
     $first = mysqli_real_escape_string($db, $_POST['first']);
     $last = mysqli_escape_string($db, $_POST['last']);
-    $email = mysqli_escape_string($db, $_POST['email']);
-    $password = mysqli_escape_string($db, $_POST['password']);
+    $email = mysqli_real_escape_string($db, $_POST['email']);
+    $password = $_POST['password'];
     $date = mysqli_escape_string($db, $_POST['date']);
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     //Require the form validation handling

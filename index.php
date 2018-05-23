@@ -1,5 +1,5 @@
 <?php
-$_SESSION['email'] = $_POST['email'];
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">

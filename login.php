@@ -1,50 +1,46 @@
 <?php
+
 session_start();
-require_once 'includes/database.php';
+
 if (isset($_POST['submit'])) {
-$email = mysqli_real_escape_string($db, $_POST['email']);
-$password = mysqli_real_escape_string($db, $_POST['password']);
 
-$errors = [];
-if ($email == '') {
-    $errors['email'] = 'Email mag niet leeg zijn';
-}
-if ($password == '') {
-    $errors['password'] = 'Password mag niet leeg zijn';
-}
+    include 'includes/database.php';
 
-$query = "SELECT * FROM users WHERE email = '$email'"; // AND password = '$password'
-$result = mysqli_query($db, $query);
+    $email = mysqli_real_escape_string($db, $_POST['email']);
+    $password = $_POST['password'];
+    
+    //error handlers
+    //check if input are empty
 
-$user = mysqli_fetch_assoc($result);
+    if (empty($email) || empty($password)) {
+        header("Location: index.php?login=empty");
+        exit();
+    } 
+    else {
+        $sql = "SELECT * FROM users WHERE email='$email'";
+        $result = mysqli_query($db, $sql);
 
-if ($user) {
-    $hash = $user['password'];
-    // $isAdmin = $row['isAdmin'];
+        $user = mysqli_fetch_assoc($result);
 
-    if (password_verify($_POST['password'], $hash)) {
-        $_SESSION['email'] = $_POST['email'];
-        // doorsturen naar welkomspagina
-        header('location: secure.php');
-        exit;
+        if($user) {
+            if(password_verify($password, $user['password'])) {
+                $_SESSION['id'] = $row['id'];
+                $_SESSION['first'] = $row['first'];
+                $_SESSION['last'] = $row['last'];
+                $_SESSION['email'] = $row['email'];
+                header("Location: index.php?login=success");
+                exit();
+            }
+            else {
+                $error = "Email and password do not match";
+            }
+        }
+        else {
+            $error = "This email does not appear to exist";
+        }
     }
-    } else {
-        echo 'Login failed';
-    }
 }
-   if ($user) {
-       $_SESSION['email'] = $email['email'];
-       // doorsturen naar welkomspagina
-       header('location: geheim.php');
-       exit;
-   }
-//    else {
-//        $errors ['general'] = 'combinatie email en password klopt niet';
-//    }
-// }     
-
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -60,7 +56,7 @@ if ($user) {
 <form action="" method="post">
     <div>
         <label for="email">Email</label>
-        <input id="email" type="text" name="email" value="">
+        <input id="email" type="text" name="email" value="<?= isset($email) ? $email : ''?>">
         <span><?= isset($errors['email']) ? $errors['email'] : '' ?></span>
     </div>
     <div>
@@ -72,6 +68,9 @@ if ($user) {
         <input type="submit" name="submit" value="login">
     </div>
 </form>
+<div>
+<?= isset($error) ? $error : '' ?>
+</div>
 </body>
 </html>
 

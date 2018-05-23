@@ -1,5 +1,19 @@
 <?php
-$_SESSION['email'] = $_POST['email'];
+session_start()
+if ($_SESSION['email'] == 'email') {
+
+require_once 'includes/database.php';
+
+$query = "SELECT * FROM users";
+$result = mysqli_query($db, $query);
+
+if (isset($_GET['delete'])) {
+    $delete = "DELETE FROM users WHERE id =" . $_GET['delete'];
+    mysqli_query($db, $delete);
+    header('location:geheim.php');
+//print_r($delete);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -9,7 +23,11 @@ $_SESSION['email'] = $_POST['email'];
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 </head>
-<body>
-    <h1>Deze pagina is super geheim</h1>
-</body>
+
+    <body>
+        <h1>hoi</h1>
+    </body>
 </html>
+<?php
+}
+?>
