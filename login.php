@@ -24,10 +24,10 @@ if (isset($_POST['submit'])) {
 
         if($user) {
             if(password_verify($password, $user['password'])) {
-                $_SESSION['id'] = $row['id'];
-                $_SESSION['first'] = $row['first'];
-                $_SESSION['last'] = $row['last'];
-                $_SESSION['email'] = $row['email'];
+                $_SESSION['id'] = $user['id'];
+                $_SESSION['first'] = $user['first'];
+                $_SESSION['last'] = $user['last'];
+                $_SESSION['email'] = $user['email'];
                 header("Location: index.php?login=success");
                 exit();
             }

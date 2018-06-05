@@ -1,5 +1,5 @@
 <?php
-session_start();
+require_once "includes/header.php";
 //Check if Post isset, else do nothing
 if (isset($_POST['submit'])) {
     //Require database in this file & image helpers
@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
     $date = mysqli_escape_string($db, $_POST['date']);
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     //Require the form validation handling
-    require_once "includes/registerValidation.php";
+    require_once "includes/register-validation.php";
 
     if (empty($errors)) {
 
@@ -39,18 +39,10 @@ if (isset($_POST['submit'])) {
         mysqli_close($db);
     }
 }
+
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <script type="text/javascript" src="javascript/main.js"></script>
-</head>
-<body>
+
     <!--check if there are any errors and print them to the screen -->
 <?php if (isset($errors) && !empty($errors)) { ?>
     <ul class="errors">
