@@ -2,7 +2,7 @@
 require_once "includes/header.php";
 ?>
 <!-- ff met materialise ofzoiets containers van maken en stylen -->
-</div>
+
     <h1>Titel</h1>
 <div>
     <h2>participant1</h2>

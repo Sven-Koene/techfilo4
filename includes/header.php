@@ -16,7 +16,7 @@ session_start();
     <img src="images/download.jpg" class = slider>
     
 <!-- navbar kan beter gestyled worden als er ideeën zijn -->
-    <div class="navbar">
+<div class="navbar">
     <ul>
         <li><a href="index.php">Home</a></li>
         <li><a href="Sven.php">Sven</a></li>
@@ -31,3 +31,4 @@ session_start();
         <li style="float: right"><a href="login.php">Login</a></li>
         <?php } ?>
     </ul>
+</div>
