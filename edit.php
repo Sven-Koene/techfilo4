@@ -43,5 +43,6 @@ require_once "includes/editcheck.php";
 <div>
     <a href="admin.php">Terug naar het overzicht.</a>
 </div>
-</body>
-</html>
+<?php
+require_once "includes/footer.php";
+?>

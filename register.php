@@ -51,6 +51,6 @@ if (isset($success)) { ?>
         </tr>
     </form>
 </table>
-</body>
-</html>
-
+<?php
+require_once "includes/footer.php";
+?>

@@ -34,7 +34,7 @@ include "includes/user-data.php";
     <?php } ?>
     </tbody>
 </table>
-</body>
-</html>
-
+<?php
+require_once "includes/footer.php";
+?>
 

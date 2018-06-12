@@ -23,7 +23,6 @@ require_once "includes/checklogin.php";
 <div>
 <?= isset($error) ? $error : '' ?>
 </div>
-</body>
-</html>
-
-
+<?php
+require_once "includes/footer.php";
+?>
