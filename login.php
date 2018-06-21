@@ -8,12 +8,12 @@ require_once "includes/checklogin.php";
 <form action=<?= $_SERVER['REQUEST_URI']; ?> method="post">
     <div>
         <label for="email">Email</label>
-        <input id="email" type="text" name="email" value="<?= isset($email) ? $email : ''?>">
+        <input id="email" type="text" name="email" value="<?= isset($email) ? $email : ''?>" required>
         <span><?= isset($errors['email']) ? $errors['email'] : '' ?></span>
     </div>
     <div>
         <label for="password">password</label>
-        <input id="password" type="password" name="password" value="">
+        <input id="password" type="password" name="password" value="" required>
         <span><?= isset($errors['password']) ? $errors['password'] : '' ?></span>
     </div>
     <div>

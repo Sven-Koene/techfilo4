@@ -16,7 +16,7 @@ if ($date == "") {
 if ($password == "") {
     $errors[] = 'Dit wachtwoord is niet geldig';
 }
-require_once $_SERVER['DOCUMENT_ROOT'] . '/techfilo4/securimage/securimage.php';
+require_once 'securimage/securimage.php';
         $securimage = new Securimage();
         if ($securimage->check($_POST['captcha_code']) == false) {
             $errors[] = 'Captcha is verkeerd ingevuld.';

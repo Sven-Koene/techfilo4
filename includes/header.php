@@ -7,19 +7,15 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
     <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
     <title>Document</title>
 </head>
 <body>
-
-<!-- misschien met javascript een fotoslider met een foto van iedereen die mee doet? -->
-    <img src="images/download.jpg" class = slider>
-    
-<!-- navbar kan beter gestyled worden als er ideeën zijn -->
+    <img src="images/header.jpg" class = slider>
 <nav>
-    <div class="nav-wrapper">
+    <div class="nav-wrapper amber lighten-1">
         <ul>
             <li><a href="index.php">Home</a></li>
             <li><a href="Sven.php">Sven</a></li>
@@ -37,3 +33,4 @@ session_start();
         </ul>
     </div>
 </nav>
+<div class="padding">
